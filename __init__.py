@@ -4,9 +4,12 @@ Frontier models plus uncensored open models with refusals removed; balance top-u
 accept crypto or card. Auth: the 16-digit account number is the API key.
 """
 
-from agent.reasoning_effort import OPENAI_COMPAT_WIRE_EFFORTS
 from providers import register_provider
 from providers.base import ProviderProfile
+
+# Widest OpenAI-compatible wire effort set, mirroring the bundled custom profile
+# (kept as a literal so the plugin imports no private core modules).
+_OPENAI_COMPAT_WIRE_EFFORTS = ("none", "minimal", "low", "medium", "high", "xhigh", "max")
 
 
 class CrowbotProfile(ProviderProfile):
@@ -16,7 +19,7 @@ class CrowbotProfile(ProviderProfile):
         """Widest OpenAI-compat wire set (relay vocabulary is undiscoverable), mirroring the
         bundled custom profile — without this, the Responses transport clamps onto the
         OpenAI per-model ladder and silently demotes a configured ``max`` to ``xhigh``."""
-        return OPENAI_COMPAT_WIRE_EFFORTS
+        return _OPENAI_COMPAT_WIRE_EFFORTS
 
     def default_reasoning_config(self, model: str | None = None) -> dict | None:
         """Unset ``agent.reasoning_effort`` → ``medium``.
