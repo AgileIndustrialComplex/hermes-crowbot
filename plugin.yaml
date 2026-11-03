@@ -1,5 +1,6 @@
 name: crowbot-provider
 kind: model-provider
 version: 1.0.0
+requires_hermes: ">=0.22.2"
 description: crowbot.sh as a provider — uncensored models with refusals removed, paid with crypto or card
 author: Adam
